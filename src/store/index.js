@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import pricing from "./modules/cart.module";
+import pricing from "./modules/pricing.module";
 import cart from "./modules/cart.module";
 
 Vue.use(Vuex);

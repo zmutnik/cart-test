@@ -16,6 +16,9 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import { A_FETCH_PRICING, A_FETCH_NAMES } from "../store/action.types";
+
 import PricingGroup from "@/components/Pricing/PricingGroup.vue";
 
 export default {
@@ -23,8 +26,15 @@ export default {
   components: {
     PricingGroup
   },
-  created: {
-    // get data from json
+  computed: {
+    ...mapGetters("pricing", ["GET_PRICING", "GET_NAMES"])
+  },
+  methods: {
+    ...mapActions("pricing", [A_FETCH_PRICING, A_FETCH_NAMES]),
+  },
+  async created() {
+    await this.A_FETCH_PRICING();
+    await this.A_FETCH_NAMES();
   }
 };
 </script>
