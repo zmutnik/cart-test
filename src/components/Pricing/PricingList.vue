@@ -1,9 +1,23 @@
 <template>
-  <div class="pricing-list"></div>
+  <div class="pricing-list">
+    {{ item }}
+  </div>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    ...mapGetters("pricing", ["GET_GROUP_NAME"])
+  }
+};
 </script>
 
 <style lang="stylus" scoped>

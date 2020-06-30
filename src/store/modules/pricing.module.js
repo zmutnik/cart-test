@@ -10,8 +10,17 @@ const state = {
 };
 
 const getters = {
-  GET_PRICING: state => state.pricing,
-  GET_NAMES: state => state.names
+  GET_TRANSFORMED_PRICING: state => field => {
+    return state.pricing.reduce((transformedData, item) => {
+      const groupId = item[field];
+
+      if (!transformedData[groupId]) transformedData[groupId] = [];
+      transformedData[groupId].push(item);
+
+      return transformedData;
+    }, {});
+  },
+  GET_GROUP_NAME: state => groupId => state.names[groupId].G
 };
 
 const actions = {
@@ -42,16 +51,7 @@ const actions = {
 };
 
 const mutations = {
-  [M_SET_PRICING](state, pricingData) {
-    const pricing = pricingData.reduce((data, item) => {
-      const groupId = item.G;
-
-      if (!data[groupId]) data[groupId] = [];
-      data[groupId].push(item);
-
-      return data;
-    }, {});
-
+  [M_SET_PRICING](state, pricing) {
     state.pricing = pricing;
   },
   [M_SET_NAMES](state, names) {
