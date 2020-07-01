@@ -3,10 +3,8 @@
     <div class="pricing-group__head">
       <div>{{ GET_GROUP_NAME(groupId) }}</div>
     </div>
-    <div class="pricing-group__list">
-      <div v-for="item in items" :key="item.T" class="pricing-group__list-item">
-        <PricingList :item="item" />
-      </div>
+    <div class="pricing-group__body">
+      <PricingList :items="items" />
     </div>
   </div>
 </template>
@@ -38,16 +36,12 @@ export default {
 
 <style lang="stylus" scoped>
 .pricing-group
-  display block
   margin-bottom 10px
+  border 1px solid #000
+  border-radius 3px 3px 0 0
+  overflow hidden
   &__head
+    border-bottom 1px solid #000
     padding 5px 10px
     background-color #eee
-  &__list
-    display flex
-    flex-wrap wrap
-  &__list-item
-    width 50%
-    max-width 50%
-    flex-basis 50%
 </style>

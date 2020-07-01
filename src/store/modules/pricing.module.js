@@ -20,7 +20,9 @@ const getters = {
       return transformedData;
     }, {});
   },
-  GET_GROUP_NAME: state => groupId => state.names[groupId].G
+  GET_GROUP_NAME: state => groupId => state.names[groupId]?.G,
+  GET_PRICING_ITEM_TITLE: state => (groupId, itemId) =>
+    state.names[groupId]?.B[itemId]?.N
 };
 
 const actions = {
