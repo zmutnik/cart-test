@@ -9,8 +9,15 @@
       </tr>
       <tr v-for="(item, i) in items" :key="i">
         <td>{{ GET_PRICING_ITEM_TITLE(item.G, item.T) }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.C | currencyFilter(currencyRatio) }}</td>
+        <td>
+          <BaseInput
+            :key="i"
+            :value="item.quantity"
+            type="number"
+            @input="changeItemQuantity(i, $event)"
+          />
+        </td>
+        <td>{{ (item.C * item.quantity) | currencyFilter(currencyRatio) }}</td>
         <td>
           <BaseButton text="Удалить" @click="removeFromCart(i)" />
         </td>
@@ -25,11 +32,18 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
+import {
+  M_CHANGE_INPUT_QUANTITY,
+  M_REMOVE_CART_ITEM
+} from "@/store/mutation.types";
+
 import BaseButton from "@/components/Base/BaseButton.vue";
+import BaseInput from "@/components/Base/BaseInput.vue";
 
 export default {
   components: {
-    BaseButton
+    BaseButton,
+    BaseInput
   },
   props: {
     items: {
@@ -43,9 +57,17 @@ export default {
     ...mapGetters("cart", ["GET_TOTAL_PRICE"])
   },
   methods: {
-    ...mapMutations("cart", ["M_REMOVE_CART_ITEM"]),
+    ...mapMutations("cart", [M_REMOVE_CART_ITEM, M_CHANGE_INPUT_QUANTITY]),
     removeFromCart(index) {
       this.M_REMOVE_CART_ITEM(index);
+    },
+    changeItemQuantity(index, event) {
+      const value = event.target.value;
+
+      this.M_CHANGE_INPUT_QUANTITY({
+        index,
+        value: value.length && parseInt(value) > 0 ? parseInt(value) : 1
+      });
     }
   }
 };

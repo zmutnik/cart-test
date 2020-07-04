@@ -1,15 +1,10 @@
-import Pricing from "../views/Pricing.vue";
+import PricingPage from "../views/PricingPage.vue";
 
 const routes = [
   {
     path: "/",
     name: "Pricing",
-    component: Pricing
-  },
-  {
-    path: "/cart",
-    name: "Cart",
-    component: () => import(/* webpackChunkName: "cart" */ "../views/Cart.vue")
+    component: PricingPage
   }
 ];
 

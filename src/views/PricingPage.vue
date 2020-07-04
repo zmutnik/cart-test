@@ -9,7 +9,7 @@
           </div>
         </div>
       </div>
-      <div class="pricing__cart">
+      <div v-show="selectedItems.length" class="pricing__cart">
         <CartTable :items="selectedItems" />
       </div>
     </div>

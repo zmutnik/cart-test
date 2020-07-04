@@ -1,4 +1,8 @@
-import { M_ADD_TO_CART, M_REMOVE_CART_ITEM } from "@/store/mutation.types";
+import {
+  M_ADD_TO_CART,
+  M_REMOVE_CART_ITEM,
+  M_CHANGE_INPUT_QUANTITY
+} from "@/store/mutation.types";
 
 const state = {
   selectedItems: []
@@ -27,13 +31,12 @@ const mutations = {
     }
   },
   [M_REMOVE_CART_ITEM](state, index) {
-    const removedItem = state.selectedItems[index];
+    state.selectedItems.splice(index, 1);
+  },
+  [M_CHANGE_INPUT_QUANTITY](state, { index, value }) {
+    const itemToChange = state.selectedItems[index];
 
-    if (removedItem.quantity > 1) {
-      removedItem.quantity--;
-    } else {
-      state.selectedItems.splice(index, 1);
-    }
+    itemToChange.quantity = value;
   }
 };
 

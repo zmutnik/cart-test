@@ -4,7 +4,7 @@
       <div class="pricing-item__description">
         {{ populatedItemData.title }} ({{ populatedItemData.quantity }})
       </div>
-      <div class="pricing-item__price" :class="{}">
+      <div class="pricing-item__price" :class="priceChangedClass">
         {{ populatedItemData.priceInUSD | currencyFilter(currencyRatio) }}
       </div>
     </div>
@@ -22,7 +22,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      priceChangedClass: ""
+    };
   },
   computed: {
     ...mapState("currency", ["currencyRatio"]),
@@ -39,7 +41,11 @@ export default {
     currencyRatio(newVal, oldVal) {
       const diff = newVal - oldVal;
 
-      console.log(diff);
+      diff < 0
+        ? (this.priceChangedClass = "_down")
+        : (this.priceChangedClass = "_up");
+
+      setTimeout(() => (this.priceChangedClass = ""), 400);
     }
   }
 };
@@ -83,6 +89,10 @@ export default {
     justify-content center
     flex-shrink 0
     padding 5px
-    min-width 50px
+    min-width 80px
     background-color #fafafa
+    &._up
+      background-color #f00
+    &._down
+      background-color #0f0
 </style>
